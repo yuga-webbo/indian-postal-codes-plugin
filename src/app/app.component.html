@@ -1,0 +1,97 @@
+<header class="jumbotron">
+  <h4 class="text-center">Indian Postal Code Finder</h4>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="form-group">
+        <label for="type">Select Filter Type</label>
+        <select
+          id="type"
+          class="form-control"
+          (change)="changeFilterType($event)"
+        >
+          <option value="by_post_office">By Post Office</option>
+          <option value="by_pin_code">By PinCode</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <div class="form-group" *ngIf="displayField">
+        <label for="pinCode">PinCode</label>
+        <input
+          id="pinCode"
+          type="tel"
+          maxlength="6"
+          class="form-control"
+          placeholder="PinCode"
+          [(ngModel)]="pinCode"
+        />
+      </div>
+      <div class="form-group" *ngIf="!displayField">
+        <label for="postOffice">Post Office Name</label>
+        <input
+          id="postOffice"
+          type="text"
+          class="form-control"
+          placeholder="Post Office Name"
+          [(ngModel)]="postOffice"
+        />
+      </div>
+      <div class="form-group">
+        <button
+          type="button"
+          *ngIf="displayField"
+          class="btn btn-primary"
+          (click)="findPinCode(pinCode)"
+        >
+          Find PinCode
+        </button>
+        <button
+          type="button"
+          *ngIf="!displayField"
+          class="btn btn-primary"
+          (click)="findPostOffice(postOffice)"
+        >
+          Find Post Office
+        </button>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"></div>
+  </div>
+  <div class="table-responsive" *ngIf="result && result.length !== 0">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Pincode</th>
+          <th>Name</th>
+          <th>Branch Type</th>
+          <th>Delivery Status</th>
+          <th>District</th>
+          <th>Division</th>
+          <th>Region</th>
+          <th>Block</th>
+          <th>State</th>
+          <th>Country</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let list of result; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ list.Pincode }}</td>
+          <td>{{ list.Name }}</td>
+          <td>{{ list.BranchType }}</td>
+          <td>{{ list.DeliveryStatus }}</td>
+          <td>{{ list.District }}</td>
+          <td>{{ list.Division }}</td>
+          <td>{{ list.Region }}</td>
+          <td>{{ list.Block }}</td>
+          <td>{{ list.State }}</td>
+          <td>{{ list.Country }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
